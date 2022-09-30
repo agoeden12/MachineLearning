@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 from matplotlib import pyplot as plt
 
-testing_set = pd.read_csv('MNIST_training_HW1.csv')
+testing_set = pd.read_csv('HW1/MNIST_training_HW1.csv')
 testing_data = np.array(testing_set[testing_set.columns.difference(['label'])])
 testing_label = np.array(testing_set['label'])
 

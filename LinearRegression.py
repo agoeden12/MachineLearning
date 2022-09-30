@@ -89,12 +89,12 @@ class LinearRegression():
 if __name__ == '__main__':
 
     # Load the training sets and split into two arrays of labels and data
-    training_set = pd.read_csv('MNIST_training_HW1.csv')
+    training_set = pd.read_csv('HW1/MNIST_training_HW1.csv')
     training_labels = np.array(training_set['label'])
     training_data = np.array(training_set[training_set.columns.difference(['label'])])
 
     # Load the testing sets and split into two arrays of labels and data
-    testing_set = pd.read_csv('MNIST_test_HW1.csv')
+    testing_set = pd.read_csv('HW1/MNIST_test_HW1.csv')
     testing_labels = np.array(testing_set['label'])
     testing_data = np.array(testing_set[testing_set.columns.difference(['label'])])
 
