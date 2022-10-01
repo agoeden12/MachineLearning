@@ -12,21 +12,33 @@ class KNN():
     accuracy = None
     verification_results = {'pass': [], 'fail': []}
 
+    # Clear the classified data and verifications results
     def clear(self):
         self.classification = []
         self.verification_results = {'pass': [], 'fail': []}
 
+    # For each image row in the test data calculate the distance to every training set and select the k nearest neighbors
     def classify(self, data: np.ndarray, k):
         for data_row in data:
+
+            # Create an empty distance array
             distances = []
             for (index, (label, values)) in enumerate(self.training_set):
+
+                # Calculate distance to every training data and save that label, distance, and index (for debugging)
                 distances.append((label, norm(data_row - values), index))
+
+            # Sort the distances
             distances.sort(key=lambda dist: dist[1])
 
+            # Get the k smallest distances and collect their labels
             neighbors = list(zip(*distances[:k]))[0]
+
+            # Select the mode from the nearest labels
             mode = int(stats.mode(neighbors, keepdims=False)[0])
             self.classification.append(mode)
 
+    # Assign the ground truth "training" labels and values in an easily parseable array
     def fit(self, labels, values):
         self.training_set = list(zip(labels, values))
 
@@ -56,16 +68,22 @@ if __name__ == '__main__':
 
     knn_model = KNN()
     knn_model.fit(training_labels, training_data)
-
+    
+    # Create results array to store the x and y axis for graphing results
     results = [[],[]]
+
+    # Loop through every odd k between 1 and 50
     for i in range(1,50,2):
         knn_model.classify(testing_data, i)
         knn_model.verify(testing_labels)
+    
+        # Add the result to the results array
         results[0].append(i)
         results[1].append(knn_model.accuracy)
 
         knn_model.print_results()
         knn_model.clear()
 
+    # Graph the accuracy against the k values
     plt.plot(results[0], results[1])
     plt.show()
